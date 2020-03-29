@@ -1,0 +1,18 @@
+@import '../../styles/index.scss';
+
+.Tile {
+  @include borders;
+  @include buttons;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+
+  &.open {
+    border-color: #7b7b7b;
+    border-width: 1px;
+  }
+}

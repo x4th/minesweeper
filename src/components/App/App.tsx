@@ -4,13 +4,21 @@ import NumberDisplay from '../NumberDisplay/NumberDisplay'
 import { generateCells } from '../../utils/utils'
 
 import './App.scss'
-import Button from '../Button/Button'
+import Tile from '../Tile/Tile'
 
 const App: React.FC = () => {
   const [cells, setCells] = useState(generateCells())
 
   const renderCells = (): React.ReactNode => {
-    return cells.map((row, rowIndex) => row.map((cell, colIndex) => <Button key={`${rowIndex}-${colIndex}`} />))
+    return cells.map((row, rowIndex) => row.map((cell, colIndex) => 
+      <Tile
+        key={`${rowIndex}-${colIndex}`}
+        row={rowIndex}
+        col={colIndex}
+        state={cell.state}
+        value={cell.value}
+      />
+    ))
   }
 
   return (
@@ -18,7 +26,7 @@ const App: React.FC = () => {
       <div className='Header'>
         <NumberDisplay value={0} />
         <div className='Face'>
-          <span role='img' aria-label='face'>🙃️</span>
+          <span role='img' aria-label='face'>🙃</span>
         </div>
         <NumberDisplay value={23} />
       </div>
