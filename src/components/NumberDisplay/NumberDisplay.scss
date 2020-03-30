@@ -11,6 +11,7 @@
   align-items: center;
   flex-grow: 1;
   height: unquote("max(6vw, 6vh)");
+  user-select: none;
 
   @include breakpoint-min($screen-md) {
     font-size: 1.9rem;

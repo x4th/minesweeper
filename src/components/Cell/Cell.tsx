@@ -8,13 +8,15 @@ interface CellProps {
   col: number,
   state: CellState,
   value: CellValue,
-  onClick: any, // TODO: set this later
-  onContext: any, // TODO: set this later
+  onClick: any, // TODO: set these later
+  onContext: any,
   onMouseDown: any,
-  onMouseUp: any
+  onMouseUp: any,
+  onTouchStart: any,
+  onTouchEnd: any
 }
 
-const Tile: React.FC<CellProps> = ({ row, col, state, value, onClick, onContext, onMouseDown, onMouseUp }) => {
+const Tile: React.FC<CellProps> = ({ row, col, state, value, onClick, onContext, onMouseDown, onMouseUp, onTouchStart, onTouchEnd }) => {
   const colors = ['blue', 'green', 'red', 'purple', 'maroon', 'turquoise', 'black', 'gray']
   const renderContent = (): React.ReactNode => {
     switch (state) {
@@ -43,6 +45,8 @@ const Tile: React.FC<CellProps> = ({ row, col, state, value, onClick, onContext,
       onContextMenu={onContext}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {renderContent()}
     </div>

@@ -30,6 +30,10 @@ const App: React.FC = () => {
   const [gameOver, setGameOver] = useState(false)
   // eslint-disable-next-line
   const [closedCellsRemaining, setClosedCellsRemaining] = useState(ROWS * COLS)
+  const [touch, setTouch] = useState({
+    timeoutID: 0,
+    happening: false
+  })
 
   // TODO: use setInteval
   useEffect(() => {
@@ -89,6 +93,21 @@ const App: React.FC = () => {
     }
   }
 
+  const handleCellTouchStart = (row: number, column: number) => {
+    setTouch({
+      timeoutID: window.setTimeout(() => handleCellContext(row, column), 500),
+      happening: true
+    })
+  }
+
+  const handleCellTouchEnd = () => {
+    clearTimeout(touch.timeoutID)
+    setTouch({
+      timeoutID: 0,
+      happening: false
+    })
+  }
+
   const handleFaceClick = () => {
     setPlaying(false)
     setGameOver(false)
@@ -122,6 +141,8 @@ const App: React.FC = () => {
         onContext={(e: React.MouseEvent) => {e.preventDefault(); handleCellContext(rowIndex, colIndex)}}
         onMouseDown={handleCellMouseDown}
         onMouseUp={handleCellMouseUp}
+        onTouchStart={(e: React.TouchEvent) => handleCellTouchStart(rowIndex, colIndex)}
+        onTouchEnd={handleCellTouchEnd}
       />
     ))
   }
