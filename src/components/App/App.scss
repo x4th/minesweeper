@@ -1,9 +1,10 @@
 @import '../../styles/index.scss';
+@import '../../styles/breakpoints.scss';
 
 .App {
   @include borders(white, #999);
   background: #c2c2c2;
-  padding: 16px;
+  padding: 1rem;
 }
 
 .Header {
@@ -12,7 +13,7 @@
   background: #c0c0c0;
   display: flex;
   justify-content: space-between;
-  padding: 10px 12px;
+  padding: 0.5rem;
 }
 
 .Body {
@@ -20,7 +21,7 @@
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  margin-top: 16px;
+  margin-top: 1rem;
 }
 
 .Face {
@@ -29,8 +30,21 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  font-size: 35px;
-  height: 52px;
+  font-size: 1.6rem;
   justify-content: center;
-  width: 52px;
+  height: unquote("max(6vw, 6vh)");
+  width: unquote("max(6vw, 6vh)");
+  margin: 0 0.5rem;
+
+  @include breakpoint-min($screen-md) {
+    font-size: 2rem;
+  }
+
+  @include breakpoint-min($screen-lg) {
+    font-size: 2.6rem;
+  }
+
+  @include breakpoint-min($screen-xl) {
+    font-size: 3.3rem;
+  }
 }

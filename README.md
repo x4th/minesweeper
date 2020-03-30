@@ -1,5 +1,4 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9a22f224-9cbd-447f-8a45-1062fc786ddb/deploy-status)](https://app.netlify.com/sites/kind-hoover-ecdd7a/deploys)
-## Hosted At: https://kind-hoover-ecdd7a.netlify.com/
 ## Available Scripts
 
 Useful commands to run from project directory:

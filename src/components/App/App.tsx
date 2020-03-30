@@ -4,7 +4,7 @@ import NumberDisplay from '../NumberDisplay/NumberDisplay'
 import { generateCells, openCells } from '../../utils/utils'
 import Cell from '../Cell/Cell'
 import { Faces, CellValue, CellState } from '../../types/types'
-import { FLAG_COUNT } from '../../constants/constants'
+import { ROWS, COLS, MINE_COUNT } from '../../constants/constants'
 
 import './App.scss'
 
@@ -23,15 +23,17 @@ const Face: React.FC<FaceProps> = ({ which, onClick }) => {
 
 const App: React.FC = () => {
   const [cells, setCells] = useState(generateCells())
-  const [flagsRemaining, setFlagsRemaining] = useState(FLAG_COUNT)
+  const [flagsRemaining, setFlagsRemaining] = useState(MINE_COUNT)
   const [face, setFace] = useState(Faces.default)
   const [secondsElapsed, setSecondsElapsed] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [gameOver, setGameOver] = useState(false)
+  // eslint-disable-next-line
+  const [closedCellsRemaining, setClosedCellsRemaining] = useState(ROWS * COLS)
 
   // TODO: use setInteval
   useEffect(() => {
-    if (playing) {
+    if (playing && secondsElapsed < 999) {
       const secondsTimeout = setTimeout(() => setSecondsElapsed(secondsElapsed => secondsElapsed + 1), 1000)
 
       return () => {
@@ -61,6 +63,13 @@ const App: React.FC = () => {
     }
 
     setCells(updatedCells)
+    const closedCellsRemaining = updatedCells.flat().reduce((acc, cur) => cur.state === CellState.closed || cur.state === CellState.flag ? acc + 1 : acc, 0)
+    setClosedCellsRemaining(closedCellsRemaining)
+    if (closedCellsRemaining > MINE_COUNT) return
+    
+    setPlaying(false)
+    setGameOver(true)
+    setFace(Faces.cool)
   }
 
   const handleCellContext = (row: number, column: number) => {
@@ -84,7 +93,7 @@ const App: React.FC = () => {
     setPlaying(false)
     setGameOver(false)
     setSecondsElapsed(0)
-    setFlagsRemaining(FLAG_COUNT)
+    setFlagsRemaining(MINE_COUNT)
     setCells(generateCells())
     setFace(Faces.default)
   }

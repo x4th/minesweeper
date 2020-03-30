@@ -1,9 +1,26 @@
+@import '../../styles/breakpoints.scss';
+
 .NumberDisplay {
-    width: 140px;
-    height: 48px;
-    color: #ff0701;
-    background: black;
-    text-align: center;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 40px;
+  color: #ff0701;
+  background: black;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  height: unquote("max(6vw, 6vh)");
+
+  @include breakpoint-min($screen-md) {
+    font-size: 1.9rem;
+  }
+
+  @include breakpoint-min($screen-lg) {
+    font-size: 2.6rem;
+  }
+
+  @include breakpoint-min($screen-xl) {
+    font-size: 3.3rem;
+  }
 }

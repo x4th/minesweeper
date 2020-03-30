@@ -1,18 +1,31 @@
 @import '../../styles/index.scss';
+@import '../../styles/breakpoints.scss';
 
 .Cell {
   @include borders;
   @include buttons;
   align-items: center;
   display: flex;
-  font-size: 30px;
   font-weight: bold;
-  height: 40px;
+  font-size: 1.5rem;
   justify-content: center;
-  width: 40px;
+  height: unquote("max(4vw, 4vh)");
+  width: unquote("max(4vw, 4vh)");
 
   &.open {
     border-color: #7b7b7b;
     border-width: 1px;
+  }
+
+  @include breakpoint-min($screen-md) {
+    font-size: 2rem;
+  }
+
+  @include breakpoint-min($screen-lg) {
+    font-size: 2.3rem;
+  }
+
+  @include breakpoint-min($screen-xl) {
+    font-size: 2.8rem;
   }
 }

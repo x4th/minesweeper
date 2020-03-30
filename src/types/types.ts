@@ -25,5 +25,6 @@ export type Cell = {
 export enum Faces {
   default = '😌',
   worried = '🤔',
+  cool = '😎',
   deado = '🤯'
 }
