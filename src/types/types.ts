@@ -21,3 +21,9 @@ export type Cell = {
   value: CellValue,
   state: CellState
 }
+
+export enum Faces {
+  default = '😌',
+  worried = '🤔',
+  deado = '🤯'
+}

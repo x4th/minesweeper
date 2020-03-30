@@ -2,15 +2,20 @@ import React from 'react'
 
 import './Tile.scss'
 import { CellState, CellValue } from '../../types/types'
+import { prependOnceListener } from 'cluster'
 
 interface TileProps {
   row: number,
   col: number,
   state: CellState,
   value: CellValue,
+  onClick: any, // TODO: set this later
+  onContext: any, // TODO: set this later
+  onMouseDown: any,
+  onMouseUp: any
 }
 
-const Tile: React.FC<TileProps> = ({ row, col, state, value }) => {
+const Tile: React.FC<TileProps> = ({ row, col, state, value, onClick, onContext, onMouseDown, onMouseUp }) => {
   const colors = ['blue', 'green', 'red', 'purple', 'maroon', 'turquoise', 'black', 'gray']
   const renderContent = (): React.ReactNode => {
     switch (state) {
@@ -31,7 +36,18 @@ const Tile: React.FC<TileProps> = ({ row, col, state, value }) => {
   if (value > 0 && value < CellValue.mine) {
     style = { color: colors[value] }
   }
-  return <div style={style} className={`Tile ${state}`}>{renderContent()}</div>
+  return (
+    <div
+      style={style}
+      className={`Tile ${state}`}
+      onClick={onClick}
+      onContextMenu={onContext}
+      onMouseDown={(e) => onMouseDown(e)}
+      onMouseUp={onMouseUp}
+    >
+      {renderContent()}
+    </div>
+  )
 }
 
 export default Tile

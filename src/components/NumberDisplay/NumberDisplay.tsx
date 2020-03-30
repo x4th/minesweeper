@@ -7,9 +7,15 @@ interface NumberDisplayProps {
 }
 
 const NumberDisplay: React.FC<NumberDisplayProps> = ({ value }) => {
+  let displayValue
+  if (value >= 0) {
+    displayValue = value.toString().padStart(3, '0')
+  } else {
+    displayValue = `-${Math.abs(value).toString().padStart(2, '0')}`
+  }
   return (
     <div className='NumberDisplay'>
-      {value.toString().padStart(3, '0')}
+      {displayValue}
     </div>
     )
 }
