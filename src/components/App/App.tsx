@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
 import NumberDisplay from '../NumberDisplay/NumberDisplay'
-import { generateCells } from '../../utils/utils'
-import Tile from '../Tile/Tile'
+import { generateCells, openCells } from '../../utils/utils'
+import Cell from '../Cell/Cell'
 import { Faces, CellValue, CellState } from '../../types/types'
 import { FLAG_COUNT } from '../../constants/constants'
 
@@ -27,6 +27,7 @@ const App: React.FC = () => {
   const [face, setFace] = useState(Faces.default)
   const [secondsElapsed, setSecondsElapsed] = useState(0)
   const [playing, setPlaying] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
 
   // TODO: use setInteval
   useEffect(() => {
@@ -40,21 +41,38 @@ const App: React.FC = () => {
     
   }, [playing, secondsElapsed])
 
-  const handleTileClick = (row: number, column: number) => {
+  const handleCellClick = (row: number, column: number) => {
+    if (gameOver) return
     if (!playing) setPlaying(true)
+
+    const currentCell = {...cells[row][column]}
+    if ([CellState.flag, CellState.open].includes(currentCell.state)) return
+
+    let updatedCells = cells.map(cell => { return cell.slice() })
+
+    if (currentCell.value === CellValue.mine) {
+      currentCell.state = CellState.open
+      updatedCells[row][column] = currentCell
+      setPlaying(false)
+      setGameOver(true)
+      setFace(Faces.deado)      
+    } else {
+      updatedCells = openCells(updatedCells, row, column)
+    }
+
+    setCells(updatedCells)
   }
 
-  const handleTileContext = (row: number, column: number) => {
-    const currentTile = cells[row][column]
+  const handleCellContext = (row: number, column: number) => {
+    const currentCell = cells[row][column]
 
-    switch (currentTile.state) {
+    switch (currentCell.state) {
       case CellState.closed:
-        // if (flagsRemaining === 0) break
-        currentTile.state = CellState.flag
+        currentCell.state = CellState.flag
         setFlagsRemaining(flagsRemaining => flagsRemaining - 1)
         break
       case CellState.flag:
-        currentTile.state = CellState.closed
+        currentCell.state = CellState.closed
         setFlagsRemaining(flagsRemaining => flagsRemaining + 1)
         break
       default:
@@ -64,33 +82,37 @@ const App: React.FC = () => {
 
   const handleFaceClick = () => {
     setPlaying(false)
+    setGameOver(false)
     setSecondsElapsed(0)
     setFlagsRemaining(FLAG_COUNT)
     setCells(generateCells())
+    setFace(Faces.default)
   }
 
-  const handleTileMouseDown = (e: React.MouseEvent) => {
+  const handleCellMouseDown = (e: React.MouseEvent) => {
     // differentiate between mouse buttons - here we need a left click
     // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons
-    if (e.buttons === 1) setFace(Faces.worried)
+    if (!gameOver && e.buttons === 1) {
+      (e.target as HTMLDivElement).classList.add('active')
+    }
   }
 
-  const handleTileMouseUp = () => {
-    setFace(Faces.default)
+  const handleCellMouseUp = () => {
+    if (!gameOver) setFace(Faces.default)
   }
 
   const renderCells = (): React.ReactNode => {
     return cells.map((row, rowIndex) => row.map((cell, colIndex) => 
-      <Tile
+      <Cell
         key={`${rowIndex}-${colIndex}`}
         row={rowIndex}
         col={colIndex}
         state={cell.state}
         value={cell.value}
-        onClick={() => handleTileClick(rowIndex, colIndex)}
-        onContext={(e: any) => {e.preventDefault(); handleTileContext(rowIndex, colIndex)}} // TODO: type
-        onMouseDown={handleTileMouseDown}
-        onMouseUp={handleTileMouseUp}
+        onClick={() => handleCellClick(rowIndex, colIndex)}
+        onContext={(e: React.MouseEvent) => {e.preventDefault(); handleCellContext(rowIndex, colIndex)}}
+        onMouseDown={handleCellMouseDown}
+        onMouseUp={handleCellMouseUp}
       />
     ))
   }

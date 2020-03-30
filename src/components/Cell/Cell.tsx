@@ -1,10 +1,9 @@
 import React from 'react'
 
-import './Tile.scss'
+import './Cell.scss'
 import { CellState, CellValue } from '../../types/types'
-import { prependOnceListener } from 'cluster'
 
-interface TileProps {
+interface CellProps {
   row: number,
   col: number,
   state: CellState,
@@ -15,7 +14,7 @@ interface TileProps {
   onMouseUp: any
 }
 
-const Tile: React.FC<TileProps> = ({ row, col, state, value, onClick, onContext, onMouseDown, onMouseUp }) => {
+const Tile: React.FC<CellProps> = ({ row, col, state, value, onClick, onContext, onMouseDown, onMouseUp }) => {
   const colors = ['blue', 'green', 'red', 'purple', 'maroon', 'turquoise', 'black', 'gray']
   const renderContent = (): React.ReactNode => {
     switch (state) {
@@ -39,10 +38,10 @@ const Tile: React.FC<TileProps> = ({ row, col, state, value, onClick, onContext,
   return (
     <div
       style={style}
-      className={`Tile ${state}`}
+      className={`Cell ${state}`}
       onClick={onClick}
       onContextMenu={onContext}
-      onMouseDown={(e) => onMouseDown(e)}
+      onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
     >
       {renderContent()}

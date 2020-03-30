@@ -8,7 +8,7 @@
 }
 
 @mixin buttons {
-  &:active {
+  &.active {
     border-left-color: #7b7b7b;
     border-top-color: #7b7b7b;
     border-right-color: white;

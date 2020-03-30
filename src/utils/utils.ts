@@ -38,3 +38,23 @@ export const generateCells = (): Cell[][] => {
 
   return cells
 }
+
+export const openCells = (
+  cells: Cell[][],
+  row: number,
+  column: number
+): Cell[][] => {
+  const cell = cells[row]?.[column]
+  if (cell  === undefined || cell.state === CellState.open) return cells
+
+  cells[row][column] = {...cell, state: CellState.open}
+  if (cell.value === CellValue.none) {
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        openCells(cells, row + i, column + j)
+      }
+    }
+  }
+
+  return cells
+}
