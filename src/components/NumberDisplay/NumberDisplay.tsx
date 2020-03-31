@@ -1,23 +1,19 @@
-import React from 'react'
+import React from "react";
 
-import './NumberDisplay.scss'
+import "./NumberDisplay.scss";
 
 interface NumberDisplayProps {
-  value: number
+  value: number;
 }
 
 const NumberDisplay: React.FC<NumberDisplayProps> = ({ value }) => {
-  let displayValue
+  let displayValue;
   if (value >= 0) {
-    displayValue = value.toString().padStart(3, '0')
+    displayValue = value.toString().padStart(3, "0");
   } else {
-    displayValue = `-${Math.abs(value).toString().padStart(2, '0')}`
+    displayValue = `-${Math.abs(value).toString().padStart(2, "0")}`;
   }
-  return (
-    <div className='NumberDisplay'>
-      {displayValue}
-    </div>
-    )
-}
+  return <div className="NumberDisplay">{displayValue}</div>;
+};
 
-export default NumberDisplay
+export default NumberDisplay;

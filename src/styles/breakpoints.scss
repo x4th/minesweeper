@@ -4,6 +4,6 @@ $screen-xl: 1280px;
 
 @mixin breakpoint-min($min) {
   @media (min-width: $min) {
-    @content
+    @content;
   }
 }

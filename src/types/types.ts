@@ -8,23 +8,24 @@ export enum CellValue {
   six,
   seven,
   eight,
-  mine
+  mine,
 }
 
 export enum CellState {
-  open = 'open',
-  closed = 'closed',
-  flag = 'flag'
+  open = "open",
+  closed = "closed",
+  flag = "flag",
+  exploded = "exploded"
 }
 
 export type Cell = {
-  value: CellValue,
-  state: CellState
-}
+  value: CellValue;
+  state: CellState;
+};
 
 export enum Faces {
-  default = '😌',
-  worried = '🤔',
-  cool = '😎',
-  deado = '🤯'
+  default = "😌",
+  worried = "🤔",
+  cool = "😎",
+  deado = "🤯",
 }

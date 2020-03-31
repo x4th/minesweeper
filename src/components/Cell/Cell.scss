@@ -1,5 +1,5 @@
-@import '../../styles/index.scss';
-@import '../../styles/breakpoints.scss';
+@import "../../styles/index.scss";
+@import "../../styles/breakpoints.scss";
 
 .Cell {
   @include borders;
@@ -7,19 +7,19 @@
   align-items: center;
   display: flex;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   justify-content: center;
   height: unquote("max(4vw, 4vh)");
   width: unquote("max(4vw, 4vh)");
   user-select: none;
 
-  &.open {
+  &.open, &.exploded {
     border-color: #7b7b7b;
     border-width: 1px;
   }
 
   @include breakpoint-min($screen-md) {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
 
   @include breakpoint-min($screen-lg) {
